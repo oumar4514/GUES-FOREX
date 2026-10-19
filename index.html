@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080812">
+<meta name="description" content="GUES-FOREX — Achat et vente de cryptomonnaies, service client et commandes personnalisées.">
+<title>GUES-FOREX | Crypto Exchange</title>
+<style>
+:root{
+  --bg:#080812;--panel:#101020;--panel2:#15152a;
+  --purple:#9b5cff;--blue:#3988ff;--white:#f7f7ff;
+  --muted:#9292ae;--line:rgba(164,140,255,.17);
+  --green:#43e6ac;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.6;overflow-x:hidden
+}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button,a{ -webkit-tap-highlight-color:transparent }
+button{cursor:pointer}
+.container{width:min(1160px,91%);margin:auto}
+.glow{
+  position:absolute;width:330px;height:330px;border-radius:50%;
+  filter:blur(110px);opacity:.2;pointer-events:none;z-index:-1
+}
+.glow.one{background:#7c35ff;top:100px;left:-180px}
+.glow.two{background:#1479ff;top:450px;right:-200px}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(8,8,18,.88);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line)
+}
+nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.logo{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:900;letter-spacing:1px}
+.logo-icon{
+  display:grid;place-items:center;width:39px;height:39px;border-radius:12px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  box-shadow:0 0 25px #7043ff55;font-size:19px
+}
+.logo span{color:#ae82ff}
+.navlinks{display:flex;align-items:center;gap:25px;color:#b8b7d0;font-size:13px}
+.navlinks a:hover{color:white}
+.btn{
+  display:inline-flex;justify-content:center;align-items:center;gap:9px;
+  padding:12px 18px;border-radius:11px;border:1px solid transparent;
+  font-weight:750;font-size:13px;transition:.25s
+}
+.btn-primary{background:linear-gradient(110deg,#8345f5,#397eff);color:white;box-shadow:0 7px 25px #713bff25}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px #713bff55}
+.btn-outline{border-color:var(--line);background:#ffffff05;color:white}
+.btn-outline:hover{border-color:var(--purple)}
+.hero{padding:85px 0 55px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:55px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 12px;
+  border:1px solid var(--line);border-radius:30px;background:#a06bff0c;
+  color:#c8adff;font-size:11px;font-weight:800;letter-spacing:1.1px
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+h1{font-size:clamp(39px,5.6vw,68px);line-height:1.08;letter-spacing:-2.7px;margin:24px 0}
+.gradient-text{background:linear-gradient(95deg,#bd92ff,#679aff 65%,#68d5ff);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:500px;font-size:15px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;color:#aaaac5;font-size:11px}
+.trust span{display:flex;gap:7px;align-items:center}
+.dashboard{
+  padding:23px;border:1px solid #a17aff28;border-radius:24px;
+  background:linear-gradient(145deg,#15152a,#0d0d19);
+  box-shadow:0 25px 90px #0008;position:relative;overflow:hidden
+}
+.dashboard:before{
+  content:"";position:absolute;inset:0 0 auto;height:2px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--blue),transparent)
+}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.dash-title{font-weight:800;font-size:14px}
+.dash-label{font-size:10px;color:var(--muted);margin-top:3px}
+.demo-tag{font-size:9px;color:#ffc96b;background:#ffc96b14;border:1px solid #ffc96b35;padding:5px 8px;border-radius:7px}
+.balance-label{font-size:11px;color:var(--muted)}
+.balance{font-size:34px;font-weight:850;letter-spacing:-1px;margin:4px 0}
+.balance small{font-size:15px;color:#b5b4ce}
+.chart{width:100%;height:125px;margin:15px 0 19px}
+.chart svg{width:100%;height:100%;overflow:visible}
+.coin-row{display:flex;align-items:center;gap:11px;padding:13px 0;border-top:1px solid var(--line)}
+.coin-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;font-weight:900;font-size:15px}
+.btc{background:#ffb13b1b;color:#ffb13b}.eth{background:#9b83ff1b;color:#b6a5ff}.usdt{background:#43e6ac19;color:#43e6ac}
+.coin-info{flex:1}.coin-name{font-size:12px;font-weight:800}.coin-sub{font-size:10px;color:var(--muted)}
+.coin-price{text-align:right;font-size:12px;font-weight:800}.coin-price small{display:block;color:#e9bc72;font-size:9px;font-weight:500}
+.section{padding:66px 0}
+.section-head{text-align:center;max-width:630px;margin:0 auto 34px}
+.kicker{font-size:10px;color:#b695ff;letter-spacing:2px;font-weight:850;text-transform:uppercase}
+h2{font-size:clamp(27px,4vw,39px);letter-spacing:-1.1px;line-height:1.2;margin:12px 0}
+.section-head p{font-size:13px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.card{background:linear-gradient(145deg,#131326,#0d0d18);border:1px solid var(--line);border-radius:18px;padding:23px;transition:.25s}
+.card:hover{transform:translateY(-4px);border-color:#9c70ff65}
+.card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.card h3{font-size:15px}
+.card p{font-size:12px;color:var(--muted);margin:7px 0 18px}
+.card .btn{width:100%}
+.small-tag{font-size:9px;color:#bda1ff;background:#9c6cff17;padding:5px 8px;border-radius:7px}
+.exchange-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:30px;align-items:start}
+.exchange-copy{padding-top:15px}
+.exchange-copy p{color:var(--muted);font-size:14px;margin:15px 0 22px}
+.features{display:grid;gap:14px;margin-top:24px}
+.feature{display:flex;gap:12px;align-items:flex-start}
+.feature-icon{width:35px;height:35px;border:1px solid var(--line);background:#9b5cff12;border-radius:10px;display:grid;place-items:center;flex-shrink:0}
+.feature strong{display:block;font-size:12px}
+.feature small{font-size:11px;color:var(--muted)}
+.form-card{background:linear-gradient(145deg,#15152b,#0d0d18);border:1px solid #9b6cff30;border-radius:22px;padding:26px}
+.form-card h3{font-size:19px;margin-bottom:4px}
+.form-sub{font-size:11px;color:var(--muted);margin-bottom:23px}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:11px;color:#cecee2;font-weight:700;margin-bottom:7px}
+.field input,.field select{
+  width:100%;padding:13px;border-radius:10px;border:1px solid #ffffff17;
+  background:#090914;color:white;outline:none;font-size:13px
+}
+.field input:focus,.field select:focus{border-color:#9461ff}
+.field select option{background:#101020}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.note{font-size:10px;color:var(--muted);margin:12px 0 16px}
+.form-card .btn{width:100%;padding:14px}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}
+.step{padding:22px;border:1px solid var(--line);border-radius:17px;background:#ffffff03}
+.step-num{font-size:12px;color:#b69aff;font-weight:900}
+.step h3{font-size:14px;margin:13px 0 7px}
+.step p{font-size:12px;color:var(--muted)}
+.notice{border:1px solid #e8b85d30;background:#e8b85d09;border-radius:13px;padding:14px 16px;color:#c7b58f;font-size:11px;margin-top:25px}
+.contact-band{
+  padding:35px;border:1px solid #8c63ff38;border-radius:22px;
+  background:radial-gradient(ellipse at top right,#46307855,transparent 60%),#111020;
+  display:flex;align-items:center;justify-content:space-between;gap:25px
+}
+.contact-band h2{font-size:28px}.contact-band p{font-size:12px;color:var(--muted);max-width:490px}
+footer{border-top:1px solid var(--line);padding:30px 0;margin-top:60px}
+.footer-inner{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+footer p,footer a{font-size:10px;color:var(--muted)}
+.footer-links{display:flex;gap:17px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);
+  background:#1b1930;border:1px solid var(--line);border-radius:12px;
+  padding:12px 18px;font-size:12px;opacity:0;pointer-events:none;transition:.3s;z-index:50
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:800px){
+ .navlinks{display:none}.hero{padding-top:56px}
+ .hero-grid,.exchange-grid{grid-template-columns:1fr;gap:32px}
+ .hero-grid{gap:38px}.cards{grid-template-columns:1fr}
+ .how-grid{grid-template-columns:1fr}.contact-band{align-items:flex-start;flex-direction:column;padding:25px}
+ .section{padding:50px 0}.dashboard{max-width:540px;width:100%;margin:auto}
+}
+@media(max-width:420px){
+ h1{letter-spacing:-1.6px}.two-col{grid-template-columns:1fr}
+ .form-card{padding:19px}.dashboard{padding:17px}
+ .hero-actions .btn{width:100%}.trust{gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+ .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="glow one"></div><div class="glow two"></div>
+
+<header>
+ <nav class="container">
+  <a href="#accueil" class="logo">
+   <div class="logo-icon">G</div>
+   GUES<span>-FOREX</span>
+  </a>
+  <div class="navlinks">
+   <a href="#cryptos">Cryptomonnaies</a>
+   <a href="#services">Services</a>
+   <a href="#fonctionnement">Comment ça marche</a>
+  </div>
+  <a class="btn btn-primary" href="#commande">Passer une commande ↗</a>
+ </nav>
+</header>
+
+<main>
+<section class="hero" id="accueil">
+ <div class="container hero-grid">
+  <div class="reveal">
+   <div class="eyebrow"><span class="dot"></span> ACHAT & VENTE DE CRYPTOS</div>
+   <h1>Le monde crypto.<br><span class="gradient-text">À votre portée.</span></h1>
+   <p>Découvrez un moyen simple de demander l'achat ou la vente de cryptomonnaies. Choisissez votre actif, indiquez votre montant et contactez notre équipe pour confirmer les détails.</p>
+   <div class="hero-actions">
+    <a class="btn btn-primary" href="#commande">₿ Acheter une crypto</a>
+    <a class="btn btn-outline" href="#commande" onclick="setOperation('Vente')">↗ Vendre une crypto</a>
+   </div>
+   <div class="trust">
+    <span>✦ Service sur commande</span>
+    <span>✦ Tarifs à confirmer</span>
+    <span>✦ Contact direct</span>
+   </div>
+  </div>
+
+  <div class="dashboard reveal">
+   <div class="dash-top">
+    <div><div class="dash-title">Aperçu du marché</div><div class="dash-label">Interface de présentation</div></div>
+    <span class="demo-tag">PRIX FICTIFS</span>
+   </div>
+   <div class="balance-label">Valeur indicative du Bitcoin</div>
+   <div class="balance">— <small>FCFA</small></div>
+   <div class="chart">
+    <svg viewBox="0 0 440 125" preserveAspectRatio="none" aria-label="Illustration graphique">
+     <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9b5cff" stop-opacity=".4"/><stop offset="100%" stop-color="#3988ff" stop-opacity="0"/></linearGradient></defs>
+     <path d="M0 100 L30 84 L55 91 L85 60 L115 72 L143 42 L174 55 L205 28 L235 49 L265 35 L294 53 L324 21 L355 39 L384 14 L414 27 L440 7 L440 125 L0 125Z" fill="url(#area)"/>
+     <path d="M0 100 L30 84 L55 91 L85 60 L115 72 L143 42 L174 55 L205 28 L235 49 L265 35 L294 53 L324 21 L355 39 L384 14 L414 27 L440 7" fill="none" stroke="#a57aff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+   </div>
+   <div class="coin-row">
+    <div class="coin-icon btc">₿</div>
+    <div class="coin-info"><div class="coin-name">Bitcoin</div><div class="coin-sub">BTC · Actif numérique</div></div>
+    <div class="coin-price">À confirmer<small>Prix indicatif indisponible</small></div>
+   </div>
+   <div class="coin-row">
+    <div class="coin-icon eth">◆</div>
+    <div class="coin-info"><div class="coin-name">Ethereum</div><div class="coin-sub">ETH · Actif numérique</div></div>
+    <div class="coin-price">À confirmer<small>Prix indicatif indisponible</small></div>
+   </div>
+   <div class="coin-row">
+    <div class="coin-icon usdt">₮</div>
+    <div class="coin-info"><div class="coin-name">Tether</div><div class="coin-sub">USDT · Stablecoin</div></div>
+    <div class="coin-price">À confirmer<small>Prix indicatif indisponible</small></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="cryptos">
+ <div class="container">
+  <div class="section-head reveal">
+   <div class="kicker">Nos actifs</div>
+   <h2>Choisissez votre crypto.</h2>
+   <p>Consultez les actifs proposés et demandez un tarif personnalisé avant de confirmer votre commande.</p>
+  </div>
+  <div class="cards">
+   <article class="card reveal">
+    <div class="card-top"><div class="coin-icon btc">₿</div><span class="small-tag">BTC</span></div>
+    <h3>Bitcoin</h3><p>L'actif numérique de référence. Demandez un devis selon votre montant et le cours applicable.</p>
+    <button class="btn btn-outline" onclick="chooseCrypto('Bitcoin (BTC)')">Demander un prix ↗</button>
+   </article>
+   <article class="card reveal">
+    <div class="card-top"><div class="coin-icon eth">◆</div><span class="small-tag">ETH</span></div>
+    <h3>Ethereum</h3><p>Un actif majeur de l'écosystème blockchain, disponible sur demande selon les conditions du vendeur.</p>
+    <button class="btn btn-outline" onclick="chooseCrypto('Ethereum (ETH)')">Demander un prix ↗</button>
+   </article>
+   <article class="card reveal">
+    <div class="card-top"><div class="coin-icon usdt">₮</div><span class="small-tag">USDT</span></div>
+    <h3>Tether</h3><p>Un stablecoin souvent utilisé pour les échanges. Le réseau et les frais doivent être confirmés.</p>
+    <button class="btn btn-outline" onclick="chooseCrypto('Tether (USDT)')">Demander un prix ↗</button>
+   </article>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="services">
+ <div class="container exchange-grid">
+  <div class="exchange-copy reveal">
+   <div class="kicker">Un service direct</div>
+   <h2>Votre commande.<br><span class="gradient-text">Votre décision.</span></h2>
+   <p>GUES-FOREX vous permet de transmettre une demande d'achat ou de vente. Le prix, les frais, le mode de paiement et les modalités de livraison sont confirmés directement avec le vendeur avant toute opération.</p>
+   <div class="features">
+    <div class="feature"><div class="feature-icon">↗</div><div><strong>Achat et vente sur demande</strong><small>Indiquez votre crypto et le montant souhaité.</small></div></div>
+    <div class="feature"><div class="feature-icon">◈</div><div><strong>Prix confirmés avant validation</strong><small>Pas de faux cours présentés comme des cotations en direct.</small></div></div>
+    <div class="feature"><div class="feature-icon">⌁</div><div><strong>Contact direct</strong><small>Échangez avec le vendeur pour confirmer les conditions.</small></div></div>
+   </div>
+  </div>
+
+  <div class="form-card reveal" id="commande">
+   <h3>Passer une commande</h3>
+   <div class="form-sub">Remplissez les détails pour préparer votre message WhatsApp.</div>
+   <form id="orderForm">
+    <div class="field">
+     <label for="operation">Type d'opération</label>
+     <select id="operation" required>
+      <option value="Achat">Je veux acheter une crypto</option>
+      <option value="Vente">Je veux vendre une crypto</option>
+     </select>
+    </div>
+    <div class="two-col">
+     <div class="field">
+      <label for="crypto">Cryptomonnaie</label>
+      <select id="crypto" required>
+       <option>Bitcoin (BTC)</option><option>Ethereum (ETH)</option><option>Tether (USDT)</option><option>Autre</option>
+      </select>
+     </div>
+     <div class="field">
+      <label for="amount">Montant souhaité</label>
+      <input id="amount" type="number" min="1" step="any" placeholder="Ex. 25000" required>
+     </div>
+    </div>
+    <div class="field">
+     <label for="currency">Monnaie du montant</label>
+     <select id="currency"><option>FCFA</option><option>USDT</option><option>USD</option><option>MAD</option></select>
+    </div>
+    <div class="field">
+     <label for="payment">Moyen de paiement souhaité</label>
+     <select id="payment" required>
+      <option value="">Choisir un moyen de paiement</option>
+      <option>Orange Money</option><option>Moov Money</option>
+      <option>Wave (si disponible)</option><option>Virement bancaire</option><option>À discuter</option>
+     </select>
+    </div>
+    <div class="field">
+     <label for="network">Réseau crypto (si applicable)</label>
+     <select id="network">
+      <option>À confirmer avec le vendeur</option>
+      <option>TRON (TRC20)</option><option>Ethereum (ERC20)</option>
+      <option>BNB Smart Chain (BEP20)</option><option>Bitcoin Network</option><option>Autre réseau</option>
+     </select>
+    </div>
+    <div class="field">
+     <label for="customer">Votre prénom ou nom commercial (facultatif)</label>
+     <input id="customer" type="text" maxlength="80" placeholder="Votre nom">
+    </div>
+    <div class="field">
+     <label for="details">Informations supplémentaires (facultatif)</label>
+     <input id="details" type="text" maxlength="250" placeholder="Précisions sur votre demande">
+    </div>
+    <p class="note">Cette demande n'est pas une transaction. Le prix, les frais, le réseau et la disponibilité doivent être confirmés avant tout paiement ou transfert.</p>
+    <button type="submit" class="btn btn-primary">Continuer sur WhatsApp ↗</button>
+   </form>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="fonctionnement">
+ <div class="container">
+  <div class="section-head reveal">
+   <div class="kicker">Simple et transparent</div>
+   <h2>Comment ça fonctionne ?</h2>
+   <p>Trois étapes pour transmettre une demande au vendeur.</p>
+  </div>
+  <div class="how-grid">
+   <div class="step reveal"><div class="step-num">ÉTAPE 01 / 03</div><h3>Choisissez votre opération</h3><p>Sélectionnez achat ou vente, l'actif numérique et le montant souhaité.</p></div>
+   <div class="step reveal"><div class="step-num">ÉTAPE 02 / 03</div><h3>Recevez une confirmation</h3><p>Contactez le vendeur pour vérifier le cours, les frais, le réseau et les conditions.</p></div>
+   <div class="step reveal"><div class="step-num">ÉTAPE 03 / 03</div><h3>Décidez en connaissance de cause</h3><p>Ne poursuivez que lorsque toutes les informations et les instructions ont été vérifiées.</p></div>
+  </div>
+  <div class="notice">⚠ Démonstration commerciale : GUES-FOREX n'affiche pas de cours en temps réel dans cette version. Les offres, les paiements, l'identité du vendeur et les modalités des opérations doivent être vérifiés. N'envoyez jamais de fonds sur la seule base d'une capture d'écran ou d'un message non vérifié.</div>
+ </div>
+</section>
+
+<section class="container reveal">
+ <div class="contact-band">
+  <div><div class="kicker">Besoin d'un renseignement ?</div><h2>Parlons de votre projet crypto.</h2><p>Contactez GUES-FOREX pour poser vos questions, demander un devis ou discuter des conditions d'une opération.</p></div>
+  <a href="#commande" class="btn btn-primary">Nous contacter ↗</a>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container footer-inner">
+  <a href="#accueil" class="logo"><div class="logo-icon">G</div>GUES<span>-FOREX</span></a>
+  <p>© <span id="year"></span> GUES-FOREX. Tous droits réservés.</p>
+  <div class="footer-links"><a href="#services">Services</a><a href="#commande">Commander</a></div>
+ </div>
+ <div class="container"><p style="margin-top:17px">Les cryptomonnaies comportent des risques. Les prix et disponibilités doivent être confirmés avant chaque opération. Ce site ne fournit pas de conseil financier.</p></div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+// CONFIGURATION : remplace ce numéro par le WhatsApp du propriétaire.
+// Format international, chiffres uniquement, sans +, espace ou tiret.
+const WHATSAPP_NUMBER = "22390856189";
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function toast(message){
+ const el=document.getElementById("toast");
+ el.textContent=message;el.classList.add("show");
+ setTimeout(()=>el.classList.remove("show"),2800);
+}
+function setOperation(value){
+ document.getElementById("operation").value=value;
+}
+function chooseCrypto(value){
+ document.getElementById("crypto").value=value;
+ document.getElementById("commande").scrollIntoView({behavior:"smooth"});
+ toast("Crypto sélectionnée : "+value);
+}
+document.getElementById("orderForm").addEventListener("submit",function(e){
+ e.preventDefault();
+ const operation=document.getElementById("operation").value;
+ const crypto=document.getElementById("crypto").value;
+ const amount=document.getElementById("amount").value;
+ const currency=document.getElementById("currency").value;
+ const payment=document.getElementById("payment").value;
+ const network=document.getElementById("network").value;
+ const customer=document.getElementById("customer").value.trim();
+ const details=document.getElementById("details").value.trim();
+
+ if(!amount||Number(amount)<=0){toast("Veuillez entrer un montant valide.");return;}
+ if(!payment){toast("Choisissez un moyen de paiement.");return;}
+
+ const message=[
+  "Bonjour GUES-FOREX, je souhaite faire une demande.",
+  "",
+  "Opération : "+operation,
+  "Cryptomonnaie : "+crypto,
+  "Montant souhaité : "+amount+" "+currency,
+  "Paiement souhaité : "+payment,
+  "Réseau : "+network,
+  customer?"Nom : "+customer:"",
+  details?"Informations : "+details:"",
+  "",
+  "Merci de confirmer le prix, les frais, la disponibilité et les conditions avant toute opération."
+ ].filter(Boolean).join("\n");
+
+ if(!/^\d{8,15}$/.test(WHATSAPP_NUMBER)||WHATSAPP_NUMBER.includes("X")){
+  toast("Démo prête : ajoutez le vrai numéro WhatsApp du propriétaire dans le code.");
+  const blob=new Blob([message],{type:"text/plain;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download="commande-gues-forex.txt";
+  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  return;
+ }
+ const url="https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message);
+ window.open(url,"_blank","noopener,noreferrer");
+});
+
+const observer=new IntersectionObserver(entries=>{
+ entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target);}
+ });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
